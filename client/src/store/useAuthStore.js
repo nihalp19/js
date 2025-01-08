@@ -3,6 +3,9 @@ import { persist } from "zustand/middleware";
 
 // Update to use import.meta.env
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
+if(import.meta.env.NODE_ENV === "development"){
+  backendUrl = "http://localhost:8401";
+}
 
 export const useAuthStore = create(persist(
   (set, get) => ({
@@ -32,8 +35,9 @@ export const useAuthStore = create(persist(
         if (!token) {
           return null
         }
+        
         console.log("token in checkAuth", token);
-        const response = await fetch("http://localhost:8401/api/auth/checkAuth", {
+        const response = await fetch(`${backendUrl}/api/auth/checkAuth`, {
           method: "GET",
           headers: {
             "Content-type": "application/json",
@@ -58,7 +62,7 @@ export const useAuthStore = create(persist(
 
     login: async (details) => {
       try {
-        const response = await fetch("http://localhost:8401/api/auth/login", {
+        const response = await fetch(`${backendUrl}/api/auth/login`, {
           method: "POST",
           headers: {
             "Content-type": "application/json",
@@ -84,7 +88,7 @@ export const useAuthStore = create(persist(
 
     logout: async () => {
       try {
-        const response = await fetch("http://localhost:8401/api/auth/logout", {
+        const response = await fetch(`${backendUrl}/api/auth/logout`, {
           method: "POST",
           headers: {
             "Content-type": "application/json",
@@ -107,7 +111,7 @@ export const useAuthStore = create(persist(
 
     signup: async (details) => {
       try {
-        const response = await fetch("http://localhost:8401/api/auth/signup", {
+        const response = await fetch(`${backendUrl}/api/auth/signup`, {
           method: "POST",
           headers: {
             "Content-type": "application/json",
@@ -135,7 +139,7 @@ export const useAuthStore = create(persist(
       }
       console.log("Bearer in publishstory", token)
       try {
-        const response = await fetch("http://localhost:8401/api/stories/publish", {
+        const response = await fetch(`${backendUrl}/api/stories/publish`, {
           method: "POST",
           headers: {
             "Content-type": "application/json",
@@ -165,7 +169,7 @@ export const useAuthStore = create(persist(
       }
       console.log("token while fetching", token)
       try {
-        const response = await fetch('http://localhost:8401/api/stories/pending', {
+        const response = await fetch(`${backendUrl}/api/stories/pending`, {
           method: 'GET',
           headers: {
             "Content-type": "application/json",
@@ -194,7 +198,7 @@ export const useAuthStore = create(persist(
       }
       const storyID = { storyId };
       try {
-        const response = await fetch(`http://localhost:8401/api/stories/approve/${storyId}`, {
+        const response = await fetch(`${backendUrl}/api/stories/approve/${storyId}`, {
           method: 'PATCH',
           headers: {
             "Content-type": "application/json",
@@ -212,7 +216,7 @@ export const useAuthStore = create(persist(
 
     fetchapprovedStory: async () => {
       try {
-        const response = await fetch("http://localhost:8401/api/stories/approved", {
+        const response = await fetch(`${backendUrl}/api/stories/approved`, {
           method: "GET",
           headers: {
             "Content-type": "application/json",
