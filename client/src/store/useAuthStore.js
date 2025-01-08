@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 // Update to use import.meta.env
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
+let backendUrl = import.meta.env.VITE_BACKEND_URL;
 if(import.meta.env.NODE_ENV === "development"){
   backendUrl = "http://localhost:8401";
 }
